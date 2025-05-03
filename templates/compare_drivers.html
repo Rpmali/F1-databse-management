@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Compare Drivers</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>Compare Drivers</h1>
+    </div>
+    <div class="form-container">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+        <form method="post">
+            <div class="form-group">
+                <label for="driver1">Select Driver 1:</label>
+                <select name="driver1" id="driver1" required>
+                    <option value="" disabled selected>Select Driver</option>
+                    {% for driver in drivers %}
+                    <option value="{{ driver.id }}" {% if driver1 and driver.id==driver1.id %}selected{% endif %}>{{
+                        driver.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="driver2">Select Driver 2:</label>
+                <select name="driver2" id="driver2" required>
+                    <option value="" disabled selected>Select Driver</option>
+                    {% for driver in drivers %}
+                    <option value="{{ driver.id }}" {% if driver2 and driver.id==driver2.id %}selected{% endif %}>{{
+                        driver.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="submit-button">Compare</button>
+            </div>
+        </form>
+    </div>
+    {% if driver1 and driver2 %}
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>{{ driver1.name }}</th>
+                    <th>{{ driver2.name }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Age</td>
+                    <td class="{% if driver1.age < driver2.age %}highlight{% endif %}">{{ driver1.age }}</td>
+                    <td class="{% if driver2.age < driver1.age %}highlight{% endif %}">{{ driver2.age }}</td>
+                </tr>
+                <tr>
+                    <td>Total Pole Positions</td>
+                    <td
+                        class="{% if driver1.total_pole_positions > driver2.total_pole_positions %}highlight{% endif %}">
+                        {{ driver1.total_pole_positions }}</td>
+                    <td
+                        class="{% if driver2.total_pole_positions > driver1.total_pole_positions %}highlight{% endif %}">
+                        {{ driver2.total_pole_positions }}</td>
+                </tr>
+                <tr>
+                    <td>Total Race Wins</td>
+                    <td class="{% if driver1.total_race_wins > driver2.total_race_wins %}highlight{% endif %}">{{
+                        driver1.total_race_wins
+                        }}</td>
+                    <td class="{% if driver2.total_race_wins > driver1.total_race_wins %}highlight{% endif %}">{{
+                        driver2.total_race_wins
+                        }}</td>
+                </tr>
+                <tr>
+                    <td>Total Points Scored</td>
+                    <td class="{% if driver1.total_points_scored > driver2.total_points_scored %}highlight{% endif %}">
+                        {{ driver1.total_points_scored }}</td>
+                    <td class="{% if driver2.total_points_scored > driver1.total_points_scored %}highlight{% endif %}">
+                        {{ driver2.total_points_scored }}</td>
+                </tr>
+                <tr>
+                    <td>Total World Titles</td>
+                    <td class="{% if driver1.total_world_titles > driver2.total_world_titles %}highlight{% endif %}">{{
+                        driver1.total_world_titles }}</td>
+                    <td class="{% if driver2.total_world_titles > driver1.total_world_titles %}highlight{% endif %}">{{
+                        driver2.total_world_titles }}</td>
+                </tr>
+                <tr>
+                    <td>Total Fastest Laps</td>
+                    <td class="{% if driver1.total_fastest_laps > driver2.total_fastest_laps %}highlight{% endif %}">{{
+                        driver1.total_fastest_laps }}</td>
+                    <td class="{% if driver2.total_fastest_laps > driver1.total_fastest_laps %}highlight{% endif %}">{{
+                        driver2.total_fastest_laps }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="comparison-table-p">Please select two drivers to compare.</p>
+    {% endif %}
+</body>
+
+</html>

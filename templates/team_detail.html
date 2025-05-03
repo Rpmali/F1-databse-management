@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Team Detail</h1>
+    </div>
+    <div class="detail-container">
+        <a href="/get-teams" class="back-button">← Back to Teams List</a>
+        <h2>{{ team.name }}</h2>
+        <table class="detail-table">
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Year Founded</td>
+                <td>{{ team.year_founded }}</td>
+            </tr>
+            <tr>
+                <td>Total Pole Positions</td>
+                <td>{{ team.total_pole_positions }}</td>
+            </tr>
+            <tr>
+                <td>Total Race Wins</td>
+                <td>{{ team.total_race_wins }}</td>
+            </tr>
+            <tr>
+                <td>Total Constructor Titles</td>
+                <td>{{ team.total_constructor_titles }}</td>
+            </tr>
+            <tr>
+                <td>Previous Season Position</td>
+                <td>{{ team.finishing_position_in_previous_season }}</td>
+            </tr>
+        </table>
+        <div class="button-container">
+            <a href="/update-team/{{ team.id }}" class="back-button">Update Team</a>
+            <a href="/delete-team/{{ team.id }}" class="back-button">Delete Team</a>
+        </div>
+    </div>
+</body>
+</html>

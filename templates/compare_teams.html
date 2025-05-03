@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Compare Teams</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>Compare Teams</h1>
+    </div>
+    <div class="form-container">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+        <form method="post">
+            <div class="form-group">
+                <label for="team1">Select Team 1:</label>
+                <select name="team1" id="team1" required>
+                    <option value="" disabled selected>Select Team</option>
+                    {% for team in teams %}
+                    <option value="{{ team.id }}" {% if team1 and team.id==team1.id %}selected{% endif %}>{{ team.name
+                        }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="team2">Select Team 2:</label>
+                <select name="team2" id="team2" required>
+                    <option value="" disabled selected>Select Team</option>
+                    {% for team in teams %}
+                    <option value="{{ team.id }}" {% if team2 and team.id==team2.id %}selected{% endif %}>{{ team.name
+                        }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="submit-button">Compare</button>
+            </div>
+        </form>
+    </div>
+    {% if team1 and team2 %}
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>{{ team1.name }}</th>
+                    <th>{{ team2.name }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Year Founded</td>
+                    <td class="{% if team1.year_founded < team2.year_founded %}highlight{% endif %}">{{
+                        team1.year_founded }}</td>
+                    <td class="{% if team2.year_founded < team1.year_founded %}highlight{% endif %}">{{
+                        team2.year_founded }}</td>
+                </tr>
+                <tr>
+                    <td>Total Pole Positions</td>
+                    <td class="{% if team1.total_pole_positions > team2.total_pole_positions %}highlight{% endif %}">{{
+                        team1.total_pole_positions }}</td>
+                    <td class="{% if team2.total_pole_positions > team1.total_pole_positions %}highlight{% endif %}">{{
+                        team2.total_pole_positions }}</td>
+                </tr>
+                <tr>
+                    <td>Total Race Wins</td>
+                    <td class="{% if team1.total_race_wins > team2.total_race_wins %}highlight{% endif %}">{{
+                        team1.total_race_wins }}</td>
+                    <td class="{% if team2.total_race_wins > team1.total_race_wins %}highlight{% endif %}">{{
+                        team2.total_race_wins }}</td>
+                </tr>
+                <tr>
+                    <td>Total Constructor Titles</td>
+                    <td
+                        class="{% if team1.total_constructor_titles > team2.total_constructor_titles %}highlight{% endif %}">
+                        {{ team1.total_constructor_titles }}</td>
+                    <td
+                        class="{% if team2.total_constructor_titles > team1.total_constructor_titles %}highlight{% endif %}">
+                        {{ team2.total_constructor_titles }}</td>
+                </tr>
+                <tr>
+                    <td>Finishing Position Last Season</td>
+                    <td
+                        class="{% if team1.finishing_position_in_previous_season < team2.finishing_position_in_previous_season %}highlight{% endif %}">
+                        {{ team1.finishing_position_in_previous_season }}</td>
+                    <td
+                        class="{% if team2.finishing_position_in_previous_season < team1.finishing_position_in_previous_season %}highlight{% endif %}">
+                        {{ team2.finishing_position_in_previous_season }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="comparison-table-p">Please select two teams to compare.</p>
+    {% endif %}
+</body>
+
+</html>

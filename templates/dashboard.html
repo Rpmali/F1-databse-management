@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formula 01</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <script type="module" src="{{ url_for('static', path='firebase-login.js') }}"></script>
+</head>
+<body>
+    <div class="navbar">
+        <h1>F1 Drivers Dashboard</h1>
+        <div class="navbar-right">
+            {% if user_token %}
+            <p>USER: {{ user_token.email }}</p>
+            <button id="logged-out">Logout</button>
+            {% else %}
+            <p>USER: Not logged in</p>
+            <a href="/login"><button id="login-button">Login</button></a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <h1>Welcome to F1 Database</h1>
+        <div class="grid-title">
+            <div class="driver-actions-title">
+                <h3>Drivers Actions</h3>
+            </div>
+            <div class="team-actions-title">
+                <h3>Teams Actions</h3>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="driver-actions">
+                <a href="/get-drivers"><button>View All Drivers</button></a>
+                <a href="/add-driver"><button>Add New Driver</button></a>
+                <a href="/update-driver"><button>Update Driver</button></a>
+                <a href="/delete-driver"><button>Delete Driver</button></a>
+                <a href="/query-drivers"><button>Query Drivers</button></a>
+                <a href="/compare-drivers"><button>Compare Drivers</button></a>
+            </div>
+            <div class="team-actions">
+                <a href="/get-teams"><button>View All Teams</button></a>
+                <a href="/add-team"><button>Add New Team</button></a>
+                <a href="/update-team"><button>Update Team</button></a>
+                <a href="/delete-team"><button>Delete Team</button></a>
+                <a href="/query-teams"><button>Query Teams</button></a>
+                <a href="/compare-teams"><button>Compare Teams</button></a>
+            </div>
+        </div>
+        {% if error_message %}
+        <div class="alert alert-error">
+            <p>{{ error_message }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

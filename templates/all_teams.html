@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 Teams List</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <script type="module" src="{{ url_for('static', path='firebase-login.js') }}"></script>
+</head>
+<body>
+    <div class="navbar">
+        <h1>F1 Teams List</h1>
+        <div class="navbar-right">
+            {% if user_token %}
+            <p>USER: {{ user_token.email }}</p>
+            <button id="logged-out">Logout</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="drivers-table-container">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+
+        <table class="drivers-table">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Year Founded</th>
+                    <th>Total Pole Positions</th>
+                    <th>Total Race Wins</th>
+                    <th>Total Constructor Titles</th>
+                    <th>Previous Season Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if teams %}
+                    {% for team in teams %}
+                    <tr>
+                        <td><a href="/team/{{ team.id }}">{{ team.to_dict().name }}</a></td>
+                        <td>{{ team.to_dict().year_founded }}</td>
+                        <td>{{ team.to_dict().total_pole_positions }}</td>
+                        <td>{{ team.to_dict().total_race_wins }}</td>
+                        <td>{{ team.to_dict().total_constructor_titles }}</td>
+                        <td>{{ team.to_dict().finishing_position_in_previous_season }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No teams found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

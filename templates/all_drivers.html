@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 Drivers List</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <script type="module" src="{{ url_for('static', path='firebase-login.js') }}"></script>
+</head>
+<body>
+    <div class="navbar">
+        <h1>F1 Drivers List</h1>
+        <div class="navbar-right">
+            {% if user_token %}
+            <p>USER: {{ user_token.email }}</p>
+            <button id="logged-out">Logout</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="drivers-table-container">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+
+        {% if error_message %}
+        <div class="alert alert-error">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        <table class="drivers-table">
+            <thead>
+                <tr>
+                    <th>Driver Name</th>
+                    <th>Age</th>
+                    <th>Total Pole Positions</th>
+                    <th>Total Race Wins</th>
+                    <th>Total Points Scored</th>
+                    <th>Total World Titles</th>
+                    <th>Total Fastest Laps</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if drivers %}
+                    {% for driver in drivers %}
+                    <tr>
+                        <td><a href="/driver/{{ driver.id }}">{{ driver.to_dict().name }}</a></td>
+                        <td>{{ driver.to_dict().age }}</td>
+                        <td>{{ driver.to_dict().total_pole_positions }}</td>
+                        <td>{{ driver.to_dict().total_race_wins }}</td>
+                        <td>{{ driver.to_dict().total_points_scored }}</td>
+                        <td>{{ driver.to_dict().total_world_titles }}</td>
+                        <td>{{ driver.to_dict().total_fastest_laps }}</td>
+                        <td class="team-name">{{ driver.to_dict().team }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" style="text-align: center;">No drivers found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

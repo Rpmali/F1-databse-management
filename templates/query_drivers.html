@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query Drivers</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <script type="module" src="{{ url_for('static', path='firebase-login.js') }}"></script>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Query Drivers</h1>
+        <div class="navbar-right">
+            {% if user_token %}
+            <p>USER: {{ user_token.email }}</p>
+            <button id="logged-out">Logout</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-container">
+        <a href="/get-drivers" class="back-button">← Back to Drivers List</a>
+        <div class="form-box">
+            <h2>Query Drivers</h2>
+            
+            {% if error_message %}
+            <div class="alert alert-error">
+                {{ error_message }}
+            </div>
+            {% endif %}
+
+            <form class="add-form" method="POST" action="/query-drivers">
+                <div class="form-group">
+                    <label for="attribute">Select Attribute</label>
+                    <select id="attribute" name="attribute" required>
+                        <option value="">Select an attribute</option>
+                        <option value="age">Age</option>
+                        <option value="total_pole_positions">Total Pole Positions</option>
+                        <option value="total_race_wins">Total Race Wins</option>
+                        <option value="total_points_scored">Total Points Scored</option>
+                        <option value="total_world_titles">Total World Titles</option>
+                        <option value="total_fastest_laps">Total Fastest Laps</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="operator">Comparison Operator</label>
+                    <select id="operator" name="operator" required>
+                        <option value="">Select operator</option>
+                        <option value="<">Less Than</option>
+                        <option value=">">Greater Than</option>
+                        <option value="==">Equal To</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="value">Value</label>
+                    <input type="number" id="value" name="value" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">Query Drivers</button>
+                    <button type="reset" class="reset-button">Reset</button>
+                </div>
+            </form>
+
+            {% if drivers %}
+            <div class="table-container">
+                <h3>Query Results</h3>
+                <table class="drivers-table">
+                    <thead>
+                        <tr>
+                            <th>Driver Name</th>
+                            <th>Age</th>
+                            <th>Team</th>
+                            <th>Race Wins</th>
+                            <th>World Titles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for driver in drivers %}
+                        <tr>
+                            <td>{{ driver.name }}</td>
+                            <td>{{ driver.age }}</td>
+                            <td>{{ driver.team }}</td>
+                            <td>{{ driver.total_race_wins }}</td>
+                            <td>{{ driver.total_world_titles }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="table-container">
+                <h3>Query Results</h3>
+                <p>No drivers found matching your criteria.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

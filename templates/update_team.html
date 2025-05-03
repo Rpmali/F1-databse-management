@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Team</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>F1 Database</h1>
+        <div class="navbar-right">
+            <button id="logged-out">Sign Out</button>
+        </div>
+    </div>
+    <div class="form-container">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+        <div class="form-box">
+            <h2>Update Team</h2>
+            
+            {% if error_message %}
+            <div class="alert alert-error">
+                {{ error_message }}
+            </div>
+            {% endif %}
+            
+            {% if success_message %}
+            <div class="alert alert-success">
+                {{ success_message }}
+            </div>
+            {% endif %}
+
+            <form class="add-form" method="POST" action="/update-team">
+                <div class="form-group">
+                    <label for="team_name">Select Team to Update</label>
+                    <select id="team_name" name="team_name" required>
+                        <option value="">Select a team</option>
+                        {% for team in teams %}
+                        <option value="{{ team.to_dict().name }}">{{ team.to_dict().name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="year_founded">Year Founded</label>
+                    <input type="number" id="year_founded" name="year_founded" required>
+                </div>
+                <div class="form-group">
+                    <label for="total_pole_positions">Total Pole Positions</label>
+                    <input type="number" id="total_pole_positions" name="total_pole_positions" required>
+                </div>
+                <div class="form-group">
+                    <label for="total_race_wins">Total Race Wins</label>
+                    <input type="number" id="total_race_wins" name="total_race_wins" required>
+                </div>
+                <div class="form-group">
+                    <label for="total_constructor_titles">Total Constructor Titles</label>
+                    <input type="number" id="total_constructor_titles" name="total_constructor_titles" required>
+                </div>
+                <div class="form-group">
+                    <label for="finishing_position_in_previous_season">Finishing Position in Previous Season</label>
+                    <input type="number" id="finishing_position_in_previous_season" name="finishing_position_in_previous_season" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">Update Team</button>
+                    <button type="reset" class="reset-button">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

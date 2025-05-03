@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Driver Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <script type="module" src="{{ url_for('static', path='firebase-login.js') }}"></script>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Driver Detail</h1>
+    </div>
+    <div class="detail-container">
+        <a href="/get-drivers" class="back-button">← Back to Drivers List</a>
+        <h2>{{ driver.name }}</h2>
+        <table class="detail-table">
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>{{ driver.age }}</td>
+            </tr>
+            <tr>
+                <td>Total Pole Positions</td>
+                <td>{{ driver.total_pole_positions }}</td>
+            </tr>
+            <tr>
+                <td>Total Race Wins</td>
+                <td>{{ driver.total_race_wins }}</td>
+            </tr>
+            <tr>
+                <td>Total Points Scored</td>
+                <td>{{ driver.total_points_scored }}</td>
+            </tr>
+            <tr>
+                <td>Total World Titles</td>
+                <td>{{ driver.total_world_titles }}</td>
+            </tr>
+            <tr>
+                <td>Total Fastest Laps</td>
+                <td>{{ driver.total_fastest_laps }}</td>
+            </tr>
+            <tr>
+                <td>Team</td>
+                <td>{{ driver.team }}</td>
+            </tr>
+        </table>
+        <div class="button-container ">
+            <a href="/update-driver/{{ driver.id }}" class="back-button">Update Driver</a>
+            <a href="/delete-driver/{{ driver.id }}" class="back-button">Delete Driver</a>
+        </div>
+    </div>
+</body>
+</html>
